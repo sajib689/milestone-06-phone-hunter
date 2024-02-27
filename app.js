@@ -27,7 +27,7 @@ const displayPhones = (phones,isShowAll) => {
           <h2 class="text-[25px] text-[800] text-center">${phone.phone_name}</h2>
           <p class="text-[25px] text-bold text-center">$ 200</p>
           <div class="card-actions justify-center">
-            <button class="btn text-white bg-[#0D6EFD]">Show Details</button>
+            <label for="my_modal_6" onClick="handleShowDetails('${phone.slug}')" class="btn text-white bg-[#0D6EFD]">Show Details</label>
           </div>
         </div>
      
@@ -36,6 +36,31 @@ const displayPhones = (phones,isShowAll) => {
     })
     // hide loading indicator
     toggleLoadingSpinner(false)
+}
+// handleshowdetails
+const handleShowDetails =async (id) => {
+    const res =await fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
+    const data = await res.json();
+    const phone = data.data;
+    console.log(phone)
+    displayShowDetails(phone);
+}
+const displayShowDetails = phone => {
+    const modal = document.getElementById('modal');
+    const container = document.createElement('div');
+    container.innerHTML = `
+    <input type="checkbox" id="my_modal_6" class="modal-toggle" />
+    <div class="modal" role="dialog">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">Hello!</h3>
+        <p class="py-4">This modal works with a hidden checkbox!</p>
+        <div class="modal-action">
+          <label for="my_modal_6" class="btn">Close!</label>
+        </div>
+      </div>
+    </div>
+    `
+    modal.appendChild(container);
 }
 // search area
 
