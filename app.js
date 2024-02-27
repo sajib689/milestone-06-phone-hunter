@@ -37,10 +37,10 @@ const displayPhones = phones => {
 }
 // search area
 
-const handleSearch = () => {
+const handleSearch = (isShowAll) => {
     toggleLoadingSpinner(true);
     const searchText = document.getElementById('search-filed').value;
-    loadPhone(searchText)
+    loadPhone(searchText, isShowAll)
     
 }
 
@@ -54,4 +54,10 @@ const toggleLoadingSpinner = (isLoading) => {
         loadingSpinener.classList.add('hidden') 
     }
     
+}
+
+// handle show all data
+
+const handleShowAll = () => { 
+    handleSearch(true)
 }
