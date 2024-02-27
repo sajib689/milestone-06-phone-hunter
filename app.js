@@ -7,6 +7,13 @@ const loadPhone = async (searchText) => {
 const displayPhones = phones => {
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.textContent = ''
+    //    show all phones
+    const showBtn = document.getElementById('show-all')
+    if(phones.length > 12) {
+        showBtn.classList.remove('hidden')
+       }
+    phones = phones.slice(0, 6)
+   
     phones.forEach(phone => {
         const phoneCard = document.createElement('div');
         phoneCard.classList = `card w-96 bg-base-100 shadow-xl  m-3`
