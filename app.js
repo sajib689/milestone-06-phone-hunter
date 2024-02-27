@@ -28,7 +28,6 @@ const displayPhones = phones => {
 
 const handleSearch = () => {
     const searchText = document.getElementById('search-filed').value;
-    console.log(searchText)
     loadPhone(searchText)
 }
 
