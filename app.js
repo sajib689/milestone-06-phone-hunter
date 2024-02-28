@@ -7,6 +7,7 @@ const loadPhone = async (searchText = '13', isShowAll) => {
 const displayPhones = (phones,isShowAll) => {
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.textContent = ''
+   
     //    show all phones
     const showBtn = document.getElementById('show-all')
     if(phones.length > 12 && !isShowAll) {
@@ -79,8 +80,17 @@ const displayShowDetails = phone => {
 const handleSearch = (isShowAll) => {
     toggleLoadingSpinner(true);
     const searchText = document.getElementById('search-filed').value;
-    loadPhone(searchText, isShowAll)
     
+    if(searchText === 'undefined') {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="#">Why do I have this issue?</a>'
+          });
+    } else {
+        loadPhone(searchText, isShowAll)
+    }
 }
 
 // loading spinner
