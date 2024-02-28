@@ -1,4 +1,4 @@
-const loadPhone = async (searchText, isShowAll) => {
+const loadPhone = async (searchText = '13', isShowAll) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
     const data = await res.json();
    const phones = data.data;
@@ -27,7 +27,7 @@ const displayPhones = (phones,isShowAll) => {
           <h2 class="text-[25px] text-[800] text-center">${phone.phone_name}</h2>
           <p class="text-[25px] text-bold text-center">$ 200</p>
           <div class="card-actions justify-center">
-            <label for="my_modal_6" onClick="handleShowDetails('${phone.slug}')" class="btn text-white bg-[#0D6EFD]">Show Details</label>
+            <button  onClick=" handleShowDetails('${phone.slug}'); my_modal_5.showModal()" class="btn text-white bg-[#0D6EFD]">Show Details</button>
           </div>
         </div>
      
@@ -46,21 +46,33 @@ const handleShowDetails =async (id) => {
     displayShowDetails(phone);
 }
 const displayShowDetails = phone => {
-    const modal = document.getElementById('modal');
-    const container = document.createElement('div');
+    const container = document.createElement('dialog');
+    container.setAttribute("id", "my_modal_5");
+    container.classList.add('modal', 'modal-bottom', 'sm:modal-middle');
+
     container.innerHTML = `
-    <input type="checkbox" id="my_modal_6" class="modal-toggle" />
-    <div class="modal" role="dialog">
-      <div class="modal-box">
+    <div class="modal-box">
+          <figure><img src="${phone.image}" alt="Shoes" /></figure>
         <h3 class="font-bold text-lg">${phone.name}</h3>
-        <p class="py-4">This modal works with a hidden checkbox!</p>
+        <h3 class="font-bold text-lg">Storage: ${phone.mainFeatures.storage}</h3>
+        <h3 class="font-bold text-lg">Display Size: ${phone.mainFeatures.displaySize}</h3>
+        <h3 class="font-bold text-lg">Chipset: ${phone.mainFeatures.chipSet}</h3>
+        <h3 class="font-bold text-lg">Memory: ${phone.mainFeatures.memory}</h3>
+        <h3 class="font-bold text-lg">Slug: ${phone.slug}</h3>
+        <h3 class="font-bold text-lg">Release data: ${phone.releaseDate}</h3>
+        <h3 class="font-bold text-lg">Brand: ${phone.brand}</h3>
+        <h3 class="font-bold text-lg">GPS: ${phone.mainFeatures.GPS}</h3>
+        
         <div class="modal-action">
-          <label for="my_modal_6" class="btn">Close!</label>
+            <form method="dialog">
+                <button class="btn" onclick="document.getElementById('my_modal_5').close()">Close</button>
+            </form>
         </div>
-      </div>
     </div>
-    `
-    modal.appendChild(container);
+    `;
+
+    document.body.appendChild(container); // Add the dialog to the document
+    container.showModal(); // Show the dialog
 }
 // search area
 
@@ -88,3 +100,4 @@ const toggleLoadingSpinner = (isLoading) => {
 const handleShowAll = () => { 
     handleSearch(true)
 }
+loadPhone()
